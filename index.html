@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookify AI - Recipe Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-utensils"></i> Cookify AI</h1>
+            <p>Enter ingredients, get delicious recipes instantly!</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="search"><i class="fas fa-search"></i> Search</button>
+            <button class="tab-btn" data-tab="favorites"><i class="fas fa-heart"></i> Favorites</button>
+            <button class="tab-btn" data-tab="planner"><i class="fas fa-calendar-alt"></i> Meal Planner</button>
+            <button class="tab-btn" data-tab="shopping"><i class="fas fa-shopping-cart"></i> Shopping List</button>
+            <button class="tab-btn" data-tab="tools"><i class="fas fa-tools"></i> Tools</button>
+        </div>
+        
+        <div class="tab-content active" id="search">
+            <div class="search-container">
+                <div class="input-group">
+                    <input type="text" id="ingredientInput" placeholder="Enter ingredients (comma separated)">
+                    <button id="searchBtn"><i class="fas fa-search"></i> Find Recipes</button>
+                </div>
+                <div class="filters">
+                    <select id="dietFilter">
+                        <option value="">Any Diet</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="gluten free">Gluten Free</option>
+                        <option value="ketogenic">Ketogenic</option>
+                    </select>
+                    <select id="intoleranceFilter">
+                        <option value="">No Intolerances</option>
+                        <option value="dairy">Dairy Free</option>
+                        <option value="egg">Egg Free</option>
+                        <option value="nut">Nut Free</option>
+                        <option value="soy">Soy Free</option>
+                    </select>
+                    <select id="timeFilter">
+                        <option value="">Any Time</option>
+                        <option value="maxReadyTime=15">Under 15 min</option>
+                        <option value="maxReadyTime=30">Under 30 min</option>
+                        <option value="maxReadyTime=60">Under 60 min</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner fa-spin"></i> Finding delicious recipes...
+            </div>
+            
+            <div class="results-container" id="resultsContainer">
+                <div class="placeholder">
+                    <i class="fas fa-pizza-slice"></i>
+                    <h3>Enter ingredients to find recipes</h3>
+                    <p>Get started by entering ingredients you have at home</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="favorites">
+            <h2>Your Favorite Recipes</h2>
+            <div class="results-container" id="favoritesContainer">
+                <div class="placeholder">
+                    <i class="fas fa-heart-broken"></i>
+                    <h3>No favorites yet</h3>
+                    <p>Save your favorite recipes by clicking the heart icon</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="planner">
+            <h2>Weekly Meal Planner</h2>
+            <div class="planner-container">
+                <div class="day-plan">
+                    <h3>Monday</h3>
+                    <div class="meal-slot" data-day="monday" data-meal="breakfast">Breakfast</div>
+                    <div class="meal-slot" data-day="monday" data-meal="lunch">Lunch</div>
+                    <div class="meal-slot" data-day="monday" data-meal="dinner">Dinner</div>
+                </div>
+                <div class="day-plan">
+                    <h3>Tuesday</h3>
+                    <div class="meal-slot" data-day="tuesday" data-meal="breakfast">Breakfast</div>
+                    <div class="meal-slot" data-day="tuesday" data-meal="lunch">Lunch</div>
+                    <div class="meal-slot" data-day="tuesday" data-meal="dinner">Dinner</div>
+                </div>
+                <div class="day-plan">
+                    <h3>Wednesday</h3>
+                    <div class="meal-slot" data-day="wednesday" data-meal="breakfast">Breakfast</div>
+                    <div class="meal-slot" data-day="wednesday" data-meal="lunch">Lunch</div>
+                    <div class="meal-slot" data-day="wednesday" data-meal="dinner">Dinner</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="shopping">
+            <h2>Shopping List</h2>
+            <div class="shopping-container">
+                <div class="input-group">
+                    <input type="text" id="shoppingItem" placeholder="Add an item">
+                    <button id="addItemBtn"><i class="fas fa-plus"></i> Add</button>
+                </div>
+                <ul id="shoppingList"></ul>
+                <button id="clearListBtn"><i class="fas fa-trash"></i> Clear List</button>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="tools">
+            <h2>Kitchen Tools</h2>
+            <div class="tools-container">
+                <div class="tool-card">
+                    <h3><i class="fas fa-clock"></i> Cooking Timer</h3>
+                    <div class="timer-container">
+                        <input type="number" id="timerMinutes" placeholder="Minutes" min="1" max="120">
+                        <button id="startTimer"><i class="fas fa-play"></i> Start</button>
+                        <div id="timerDisplay">00:00</div>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <h3><i class="fas fa-ruler"></i> Unit Converter</h3>
+                    <div class="converter-container">
+                        <input type="number" id="convertFrom" placeholder="Value">
+                        <select id="fromUnit">
+                            <option value="cup">Cup</option>
+                            <option value="tbsp">Tablespoon</option>
+                            <option value="tsp">Teaspoon</option>
+                            <option value="oz">Ounce</option>
+                        </select>
+                        <span>=</span>
+                        <input type="number" id="convertTo" placeholder="Result" readonly>
+                        <select id="toUnit">
+                            <option value="ml">Milliliter</option>
+                            <option value="g">Gram</option>
+                            <option value="kg">Kilogram</option>
+                            <option value="l">Liter</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <h3><i class="fas fa-dice"></i> Random Recipe</h3>
+                    <button id="randomRecipeBtn"><i class="fas fa-random"></i> Get Random Recipe</button>
+                </div>
+                <div class="tool-card">
+                    <h3><i class="fas fa-lightbulb"></i> Cooking Tips</h3>
+                    <div id="cookingTip">Click the button for a cooking tip!</div>
+                    <button id="tipBtn"><i class="fas fa-sync"></i> New Tip</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-modal" id="recipeModal">
+            <div class="modal-content">
+                <span class="close-btn" id="closeModal">&times;</span>
+                <div id="recipeDetails"></div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Powered by MakeIt. App made by Nthin from Funpublishers | Cookify AI &copy; 2025</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
